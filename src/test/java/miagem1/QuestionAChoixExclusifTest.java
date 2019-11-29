@@ -1,42 +1,43 @@
 package miagem1;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.*;
 
-import static org.junit.Assert.assertEquals;
-
-
-/**
- * Created by franck on 28/11/2016.
- */
 public class QuestionAChoixExclusifTest {
 
-    private QuestionAChoixExclusif questionAChoixExclusif;
-
-    @Before
-    public void setup() {
-        // given : une question à choix exclusif
-        questionAChoixExclusif = new QuestionAChoixExclusif("q1", 2);
+    private QuestionAChoixExclusif question;
+    //Etat du monde
+    //Pour tester un questionnaire, j'ai besoin de créer une instance de la classe
+    // Given : une instance de question à choix exclusif
+    @org.junit.Before
+    public void setUp() throws Exception {
+        question = new QuestionAChoixExclusif("un énoncé",  2);
     }
 
-    @Test
+    @org.junit.Test
     public void testGetEnonce() {
-        // when : on déclenche l'obtention de l'énoncé
-        String enonceObtenu = questionAChoixExclusif.getEnonce();
-        // then : l'énoncé correspond à celui fourni à la construction de la question
-        assertEquals("q1", enonceObtenu);
+        //When : on demande son énoncé à la question
+        String resEnonce = question.getEnonce();
+        //Then : l'énoncé retourné est l'énoncé fourni à la construction de la question
+        assertEquals ( "un énoncé", resEnonce);
     }
 
-    @Test
-    public void testGetScoreIndice() {
-        // when : l'indice choisi est celui de la bonne réponse
-        int indice = 2;
+
+    @org.junit.Test
+    public void testGetScoreForIndiceBonneReponse() {
+        //When : quand l'étudiant fournit l'indice de la bonne réponse
+        int indiceEtudiant = 2;
+        // and : on demande le score de l'indice à la question
+        float resScore = question.getScoreForIndice(indiceEtudiant);
         // then : le score obtenu est 100
-        assertEquals(100f, questionAChoixExclusif.getScoreForIndice(indice), 0.001f);
-        // when : l'indice choisi n'est pas celui de la bonne réponse
-        indice = 1;
-        // Then : le score obtenu est 0
-        assertEquals(0f, questionAChoixExclusif.getScoreForIndice(indice), 0.001f);
-    }
+        assertEquals(100f, resScore, 0.01f);
 
+    }
+    @org.junit.Test
+    public void testGetScoreForIndiceMauvaisReponse() {
+        //When : quand l'étudiant fournit l'indice de la bonne réponse
+        int indiceEtudiant = 2;
+        // and : on demande le score de l'indice à la question
+        float resScore = question.getScoreForIndice(indiceEtudiant);
+        // then : le score obtenu est 100
+    }       assertEquals(100f, resScore, 0.01f);
 }
